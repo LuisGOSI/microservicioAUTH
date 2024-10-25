@@ -23,8 +23,8 @@ superTokens.init({
     },
     appInfo: {
         appName: "ejemploMicroservicios",
-        apiDomain: "https://microservicio-auth-tau.vercel.app:8080",
-        websiteDomain: "https://microservicio-auth-tau.vercel.app:3000",
+        apiDomain: "https://microservicio-auth-tau.vercel.app",
+        websiteDomain: "https://microservicio-auth-tau.vercel.app",
         apiBasePath: "/authentication"
     },
     recipeList: [
@@ -40,7 +40,7 @@ superTokens.init({
 
 // Configuracion de CORS
 app.use(cors({
-    origin: "https://microservicio-auth-tau.vercel.app:3000",
+    origin: "https://microservicio-auth-tau.vercel.app",
     allowedHeaders: ["content-type", ...superTokens.getAllCORSHeaders()],
     credentials: true
 }));
