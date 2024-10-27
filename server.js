@@ -41,7 +41,6 @@ superTokens.init({
 });
 
 // Configuracion de CORS
-const cors = require('cors');
 app.use(cors({
     origin: '*', // O el dominio permitido
     allowedHeaders: ["content-type", "authorization", ...superTokens.getAllCORSHeaders()],
