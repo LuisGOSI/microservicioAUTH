@@ -42,10 +42,13 @@ superTokens.init({
 
 // Configuracion de CORS
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: (origin, callback) => {
+        callback(null, origin); // Permitir todos los orígenes de manera dinámica
+    },
     allowedHeaders: ["content-type", ...superTokens.getAllCORSHeaders()],
     credentials: true
 }));
+
 
 // Middleware de SuperTokens
 app.use(middleware());
