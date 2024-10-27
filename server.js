@@ -25,7 +25,7 @@ superTokens.init({
     },
     appInfo: {
         appName: "ejemploMicroservicios",
-        apiDomain: "http://localhost:8080",
+        apiDomain: "https://microservicioauth.onrender.com",
         websiteDomain: "http://localhost:3000",
         apiBasePath: "/authentication"
     },
@@ -56,7 +56,7 @@ app.use(middleware());
 //!Rutas -----------------------------------------------------------------------------
 
 // Ruta de SignUp
-app.get("/authentication/signUp", async (req, res) => {
+app.post("/authentication/signUp", async (req, res) => {
     console.log(req.body);
     const { email, password } = req.body;
     console.log(email);
