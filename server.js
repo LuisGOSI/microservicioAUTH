@@ -10,9 +10,11 @@ const express = require('express');
 
 // Inicializacion de la aplicacion
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 
 // Puerto de la aplicacion
-const port = 3000;
+const port = process.env.PORT || 8080;
 
 // Configuracion de SuperTokens
 superTokens.init({
@@ -23,8 +25,8 @@ superTokens.init({
     },
     appInfo: {
         appName: "ejemploMicroservicios",
-        apiDomain: "https://microservicio-auth-tau.vercel.app",
-        websiteDomain: "https://microservicio-auth-tau.vercel.app",
+        apiDomain: "http://localhost:8080",
+        websiteDomain: "http://localhost:3000",
         apiBasePath: "/authentication"
     },
     recipeList: [
@@ -40,7 +42,7 @@ superTokens.init({
 
 // Configuracion de CORS
 app.use(cors({
-    origin: "https://microservicio-auth-tau.vercel.app",
+    origin: "http://localhost:3000",
     allowedHeaders: ["content-type", ...superTokens.getAllCORSHeaders()],
     credentials: true
 }));
@@ -52,15 +54,19 @@ app.use(middleware());
 
 // Ruta de SignUp
 app.post("/authentication/signUp",async (req, res) => {
-    if (checkEmail(req.body.email) === 1) {
-        res.status(400).send("Email already in use");
+    const { email, password } = req.body;
+    if (email === "" || password === "") {
+        return res.status(400).send("Email or password cannot be empty");
     }
-    let signUpResponse = await signUpClicked(req.body.email, req.body.password);
-    if (signUpResponse === 0) {
-        res.status(200).send(signUpResponse);
+    if (await checkEmail(email) === 1) {
+        return res.status(400).send("Email already in use");
+    }
+    let signUpResponse = await signUpClicked(email,password);
+    if (signUpResponse.error) {
+        return res.status(200).send(signUpResponse.error);
     }
     else {
-        res.status(400).send(signUpResponse);
+        return res.status(400).send(signUpResponse);
     }
 });
 
@@ -68,10 +74,10 @@ app.post("/authentication/signUp",async (req, res) => {
 app.post("/authentication/signIn", async (req, res) => {
     try {
         let signInResponse = await EmailPassword.signIn(req.body.email, req.body.password);
-        if (signInResponse === 0) {
-            res.status(400).send("Error");
+        if (signInResponse.error) {
+            return res.status(400).send(signInResponse.error);
         } else {
-            res.status(200).send(signInResponse);
+            return res.status(200).send("Sign In successful");
         }
     } catch (err) {
         res.status(400).send("Error");
