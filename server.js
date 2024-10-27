@@ -41,13 +41,13 @@ superTokens.init({
 });
 
 // Configuracion de CORS
+const cors = require('cors');
 app.use(cors({
-    origin: (origin, callback) => {
-        callback(null, origin); // Permitir todos los orígenes de manera dinámica
-    },
-    allowedHeaders: ["content-type", ...superTokens.getAllCORSHeaders()],
+    origin: '*', // O el dominio permitido
+    allowedHeaders: ["content-type", "authorization", ...superTokens.getAllCORSHeaders()],
     credentials: true
 }));
+
 
 
 // Middleware de SuperTokens
@@ -90,7 +90,8 @@ app.post("/authentication/signIn", async (req, res) => {
     }
 });
 
-app.post("/", (req, res) => {
+// Ruta de prueba
+app.get("/", (req, res) => {
     res.send("Hello World");
 });
 
