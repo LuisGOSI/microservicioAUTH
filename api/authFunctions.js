@@ -7,6 +7,8 @@ const { emailExists } = require('supertokens-node/recipe/emailpassword');
 // Funcion para registrarse
 
 async function signUpClicked(email, password) {
+    console.log("Email: " + email);
+    console.log("Password: " + password);
     try {
         let response = await signUp({
             formFields: [{ id: "email", value: email }, { id: "password", value: password }]
