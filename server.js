@@ -56,7 +56,7 @@ app.use(middleware());
 //!Rutas -----------------------------------------------------------------------------
 
 // Ruta de SignUp
-app.post("/authentication/signUp", async (req, res) => {
+app.get("/authentication/signUp", async (req, res) => {
     console.log(req.body);
     const { email, password } = req.body;
     console.log(email);
