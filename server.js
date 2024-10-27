@@ -11,7 +11,7 @@ const express = require('express');
 // Inicializacion de la aplicacion
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 
 // Puerto de la aplicacion
 const port = process.env.PORT || 8080;
@@ -53,7 +53,7 @@ app.use(middleware());
 //!Rutas -----------------------------------------------------------------------------
 
 // Ruta de SignUp
-app.post("/authentication/signUp",async (req, res) => {
+app.post("/authentication/signUp", async (req, res) => {
     const { email, password } = req.body;
     if (email === "" || password === "") {
         return res.status(400).send("Email or password cannot be empty");
@@ -61,12 +61,11 @@ app.post("/authentication/signUp",async (req, res) => {
     if (await checkEmail(email) === 1) {
         return res.status(400).send("Email already in use");
     }
-    let signUpResponse = await signUpClicked(email,password);
+    let signUpResponse = await signUpClicked(email, password);
     if (signUpResponse.error) {
-        return res.status(200).send(signUpResponse.error);
-    }
+        res.status(500).json({message: "Error al registrar la cita"});    }
     else {
-        return res.status(400).send(signUpResponse);
+        res.status(200).json({ message: "Nueva cita registrada" });
     }
 });
 
