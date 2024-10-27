@@ -26,7 +26,7 @@ superTokens.init({
     appInfo: {
         appName: "ejemploMicroservicios",
         apiDomain: "https://microservicioauth.onrender.com",
-        websiteDomain: "http://localhost:3000",
+        websiteDomain: "https://frontend-microservicios.vercel.app/",
         apiBasePath: "/authentication"
     },
     recipeList: [
