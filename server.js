@@ -90,6 +90,10 @@ app.post("/authentication/signIn", async (req, res) => {
     }
 });
 
+app.post("/", (req, res) => {
+    res.send("Hello World");
+});
+
 // Ruta de verificación
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
