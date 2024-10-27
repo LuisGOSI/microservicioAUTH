@@ -55,25 +55,25 @@ app.use(middleware());
 //!Rutas -----------------------------------------------------------------------------
 
 // Ruta de SignUp
-app.post("/authentication/signUp", async (req, res) => {
-    console.log(req.body);
-    const { email, password } = req.body;
-    console.log(email);
-    console.log(password);
-    if (email === "" || password === "") {
-        return res.status(400).send("Email or password cannot be empty");
-    }
-    if (await checkEmail(email) === 1) {
-        return res.status(400).send("Email already in use");
-    }
-    let signUpResponse = await signUpClicked(email, password);
-    console.log("Si paso por la funcion de signUp");
-    if (signUpResponse.error) {
-        res.status(500).json({message: "Error al registrar la cita"});    }
-    else {
-        res.status(200).json({ message: "Nueva cita registrada" });
-    }
-});
+// app.post("/authentication/signUp", async (req, res) => {
+//     console.log(req.body);
+//     const { email, password } = req.body;
+//     console.log(email);
+//     console.log(password);
+//     if (email === "" || password === "") {
+//         return res.status(400).send("Email or password cannot be empty");
+//     }
+//     if (await checkEmail(email) === 1) {
+//         return res.status(400).send("Email already in use");
+//     }
+//     let signUpResponse = await signUpClicked(email, password);
+//     console.log("Si paso por la funcion de signUp");
+//     if (signUpResponse.error) {
+//         res.status(500).json({message: "Error al registrar la cita"});    }
+//     else {
+//         res.status(200).json({ message: "Nueva cita registrada" });
+//     }
+// });
 
 // Ruta de SignIn
 app.post("/authentication/signIn", async (req, res) => {
