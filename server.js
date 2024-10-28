@@ -12,12 +12,12 @@ const port = process.env.PORT || 8080;
 
 // Configuración de Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyCW0LjYlWCadlfAn34m25zMiZuQIYj6ln4",
-    authDomain: "microserviceauth-686eb.firebaseapp.com",
-    projectId: "microserviceauth-686eb",
-    storageBucket: "microserviceauth-686eb.appspot.com",
-    messagingSenderId: "825812357836",
-    appId: "1:825812357836:web:874bbbe4fef9711f85e869"
+    apiKey: process.env.apiKey,
+    authDomain: process.env.authDomain,
+    projectId: process.env.projectId,
+    storageBucket: process.env.storageBucket,
+    messagingSenderId: process.env.messagingSenderId,
+    appId: process.env.appId
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
@@ -25,18 +25,14 @@ const auth = getAuth(firebaseApp);
 
 //! Rutas -----------------------------------------------------------------------
 
-app.post("/auth/register", async (req, res) => {
+app.post("/authentication/signUp", async (req, res) => {
     const { email, password } = req.body;
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const token = await userCredential.user.getIdToken(); 
         res.json({
             message: 'User registered successfully',
-            token: token,
-            user: {
-                email: userCredential.user.email,
-                uid: userCredential.user.uid
-            }
+            token: token
         });
     } catch (error) {
         res.status(400).json({
@@ -46,18 +42,14 @@ app.post("/auth/register", async (req, res) => {
     }
 });
 
-app.post("/auth/login", async (req, res) => {
+app.post("/authentication/signIn", async (req, res) => {
     const { email, password } = req.body;
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const token = await userCredential.user.getIdToken();
         res.json({
             message: 'User logged in successfully',
-            token: token,
-            user: {
-                email: userCredential.user.email,
-                uid: userCredential.user.uid
-            }
+            token: token
         });
     } catch (error) {
         res.status(400).json({
