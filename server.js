@@ -32,7 +32,8 @@ app.post("/authentication/signUp", async (req, res) => {
         const token = await userCredential.user.getIdToken(); 
         res.json({
             message: 'User registered successfully',
-            token: token
+            token: token,
+            userId: userCredential.user.uid
         });
     } catch (error) {
         res.status(400).json({
@@ -49,7 +50,8 @@ app.post("/authentication/signIn", async (req, res) => {
         const token = await userCredential.user.getIdToken();
         res.json({
             message: 'User logged in successfully',
-            token: token
+            token: token,
+            userId: userCredential.user.uid
         });
     } catch (error) {
         res.status(400).json({
